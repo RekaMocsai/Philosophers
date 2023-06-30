@@ -1,3 +1,6 @@
+            THE DINING PHILOSOPHERS PROBLEM
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 In computer science, the dining philosophers problem is an example often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 
 42's Philosophers project is teaching you to work with multipiple threads that share and work on the same memory. Now I know that if a variable is accessed by more than one thread, it will need a mutex to protect it againt data races.
