@@ -3,40 +3,43 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmocsai <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/06/29 09:14:37 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/06/30 16:17:43 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # targets
-NAME := philo
+NAME 		= philo
 
 # colors
-RESET := \033[0m
-BOLD := \033[1m
-BLACK := \033[30m
-GREEN := \033[32m
-YELLOW := \033[33m
-RED := \033[31m
-BLUE := \033[34m
+CLR_RM 		= \033[0m
+BOLD 		= \033[1m
+BLACK 		= \033[30m
+MAGENTA		= \033[0;95m
+BLUE		= \033[1;34m
+CYAN 		= \033[1;36m
+GREEN		= \033[1;32m
+YELLOW		= \033[1;33m
+RED		    = \033[1;31m
+WHITE		= \033[0;97m
 
 # directories
-SRC_DIR := src
-INC_DIR := inc
-OBJ_DIR := obj
-DEP_DIR := $(OBJ_DIR)/dep
+SRC_DIR 	= src
+INC_DIR 	= inc
+OBJ_DIR 	= obj
+DEP_DIR 	= $(OBJ_DIR)/dep
 
 # compilation
-CC := cc
-CPPFLAGS = -I $(INC_DIR)
-CFLAGS = -Wall -Werror -Wextra -pthread -g
-DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
-COMPILE = $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
+CC 			= cc
+CPPFLAGS 	= -I $(INC_DIR)
+CFLAGS 		= -Wall -Werror -Wextra -pthread -g
+DEPFLAGS 	= -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
+COMPILE 	= $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
 
 # source files
-SRC :=i
+SRC 		= i
 
 PHONY. all re clean fclean
 SILENT.
@@ -44,26 +47,24 @@ SILENT.
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\n$(YELLOW)$(BOLD)link binary$(RESET) [$(BLUE)philosophers$(RESET)]\n"
+	echo "Compilation in progress..."
 	$(COMPILE) $(OBJS) -o $@
-	@printf "\n$(YELLOW)$(BOLD)compilation succesful$(RESET) [$(BLUE)philosophers$(RESET)]\n"
-	@printf "$(GREEN)$(BOLD)$(NAME)$(RESET) created!$(RESET)\n\n"
-iclean:
-	@printf "\n$(YELLOW)$(BOLD)clean$(RESET) [$(BLUE)philosophers$(RESET)]\n"
-	@rm -rf $(OBJ_DIR)
-	@printf "$(RED)removed subdir $(OBJ_DIR)$(RESET)\n"
+	echo "$(CYAN)$(BOLD)$(NAME) $(CLR_RM)created ✔️"
+	
+clean:
+	rm -rf $(OBJ_DIR)
+	echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RM)object files ✔️"
 
 fclean: clean
-	@rm -rf $(NAME)
-	@printf "$(RED)removed binary $(NAME)$(RESET)\n"
+	rm -rf $(NAME)
+	echo "$(RED) binary removed $(NAME)$(CLR_RM)"
 
-re: fclean alli
+re: fclean all
 
 debug: CFLAGS += -fsanitize=address
 debug: fclean $(NAME)
-	@printf "DEBUG: Compiled with $(YELLOW)$(BOLD)fsanitize=address$(RESET)\n\n"
+	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=address$(CLR_RM)"
 
 tebug: CFLAGS += -fsanitize=thread
 tebug: fclean $(NAME)
-	@printf "DEBUG: Compiled with $(YELLOW)$(BOLD)fsanitize=thread$(RESET)\n\n"
-
+	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=thread$(CLR_RM)"
