@@ -8,7 +8,7 @@ Not allowed: libft
 
 Mandatory part:
 
-Implement dining philosophers with threads and mutexes.
+Implement dining philosophers problem with threads and mutexes.
 
     pthread_create() - creates a new thread
     pthread_join() - waits until certain thread finishes, not to have zombie threads in the end.
@@ -18,9 +18,9 @@ Implement dining philosophers with threads and mutexes.
     pthread_mutex_unlock() - unlocks a mutex
     usleep() - makes a thread to sleep for microseconds
     gettimeofday() - returns number of microseconds passed since 1 January 1970
-    malloc() - allocates memory on heap
-    free() - frees memory from heap
-    printf() - prints
+    malloc() - allocates memory on the heap
+    free() - frees allocated memory from heap
+    printf() - prints to stdoutput
 
 
 Other repos:
