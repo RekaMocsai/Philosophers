@@ -1,0 +1,7 @@
+*.txt
+.vscode
+*.o
+*.swp
+obj/
+philo
+.vscode

@@ -3,46 +3,65 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
+#    By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/06/30 16:17:43 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/11 15:34:54 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# targets
-NAME 		= philo
 
 # colors
 CLR_RM 		= \033[0m
 BOLD 		= \033[1m
-BLACK 		= \033[30m
 MAGENTA		= \033[0;95m
-BLUE		= \033[1;34m
 CYAN 		= \033[1;36m
-GREEN		= \033[1;32m
-YELLOW		= \033[1;33m
 RED		    = \033[1;31m
-WHITE		= \033[0;97m
+YELLOW		= \033[1;33m
+#BLACK 		= \033[30m
+#BLUE		= \033[1;34m
+#GREEN		= \033[1;32m
+#WHITE		= \033[0;97m
+
+# target
+NAME 		= philo
 
 # directories
-SRC_DIR 	= src
-INC_DIR 	= inc
-OBJ_DIR 	= obj
-DEP_DIR 	= $(OBJ_DIR)/dep
+SRC_DIR 	= ./src/
+INC_DIR 	= ./inc/
+OBJ_DIR 	= ./obj/
+DEP_DIR		= $(OBJ_DIR)dep
 
 # compilation
 CC 			= cc
 CPPFLAGS 	= -I $(INC_DIR)
+DEPFLAGS	= #-MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 CFLAGS 		= -Wall -Werror -Wextra -pthread -g
-DEPFLAGS 	= -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 COMPILE 	= $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
 
 # source files
-SRC 		= i
+SRC 		=	main.c \
+				checker.c \
+				utils.c
+SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
-PHONY. all re clean fclean
-SILENT.
+# objects
+OBJ			= $(SRC:.c=.o)
+OBJS		= $(addprefix $(OBJ_DIR), $(OBJ))
+
+# dependencies
+#DEPFILES :=$(SRC:%.c=$(DEP_DIR)/%.d)
+
+.PHONY: all re clean fclean 
+.SILENT:
+
+$(OBJ_DIR)%.o:		$(SRC_DIR)%.c
+		mkdir -p obj
+		$(COMPILE) -c $< -o $@
+
+# $(DEP_DIR):
+# 	printf "\n$(YELLOW)$(BOLD)create subdir$(CLR_RM) [$(CYAN)philosophers$(CLR_RM)]\n"
+# 	mkdir -p $@
+#$(DEPFILES):
 
 all: $(NAME)
 
@@ -50,14 +69,15 @@ $(NAME): $(OBJS)
 	echo "Compilation in progress..."
 	$(COMPILE) $(OBJS) -o $@
 	echo "$(CYAN)$(BOLD)$(NAME) $(CLR_RM)created ✔️"
-	
+
+
 clean:
 	rm -rf $(OBJ_DIR)
-	echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RM)object files ✔️"
+	echo "$(RED)Deleting$(CLR_RM) object files ✔️"
 
 fclean: clean
 	rm -rf $(NAME)
-	echo "$(RED) binary removed $(NAME)$(CLR_RM)"
+	echo "$(RED)Deleting$(CLR_RM) binary: $(CYAN)$(NAME)$(CLR_RM) ✔️"
 
 re: fclean all
 
