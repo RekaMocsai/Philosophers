@@ -3,7 +3,7 @@
 
 In computer science, the dining philosophers problem is an example often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 
-42's Philosophers project is teaching you to work with multipiple threads that share and work on the same memory. Now I know that if a variable is accessed by more than one thread, it will need a mutex to protect it againt data races.
+42's Philosophers project is teaching you to work with multipiple threads that share and work on the same memory. If a variable is accessed by more than one thread, it will need a mutex to protect it. Mutex stand for mutual exclusion in order to avoid a deadlock and data races.
 
 Allowed functions: memset, printf, malloc, free, write, usleep, gettimeofday, pthread_create, pthread_detach, pthread_join, pthread_mutex_init, pthread_mutex_destroy, thread_mutex_lock, pthread_mutex_unlock
 
