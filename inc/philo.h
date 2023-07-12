@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/12 11:22:08 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:23:56 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,16 @@ typedef struct s_philo
 	int				times_eaten;
 }	t_philo;
 
-typedef struct t_big
+typedef struct s_fork
 {
-	int		nr;
+	int	id;
+	pthread_mutex_t	fork_mutex; 
+}	t_fork;
+
+
+typedef struct s_big
+{
+	int		philo_nr;
 	int		ttd;
 	int		tte;
 	int		tts;
@@ -45,7 +52,7 @@ typedef struct t_big
 
 /* Input checking */
 int				input_checker(int argc, char **argv);
-int				invalid_entry(t_big *big);
+void			invalid_entry_check(t_big *big);
 
 /* Utils */
 int				ft_atoi(const char *str);

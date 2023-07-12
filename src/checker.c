@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/12 11:18:59 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:24:18 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	ft_isdigit(int c)
 		return (0);
 }
 
+/* Checks for empty strings & if args are digits only */
 static int	check_args(int argc, char **argv)
 {
 	int i;
@@ -46,7 +47,7 @@ static int	check_args(int argc, char **argv)
 	return (0);
 }
 
-
+/* Returns 1 if input is incorrect - error msg already printed! */
 int	input_checker(int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
@@ -56,7 +57,7 @@ int	input_checker(int argc, char **argv)
 			"time_to_die " \
 			"time_to_eat " \
 			"time_to_sleep " \
-			"[number_of_times_each_philosopher_must_eat]\n"
+			"[Optional: number_of_times_each_philosopher_must_eat]\n"
 			"Times are in ms. Only positive numbers alloved! " \
 			"- args might be subjected to limitations, " \
 			"but feel free to play around!\n");
@@ -67,26 +68,24 @@ int	input_checker(int argc, char **argv)
 	return (0);
 }
 
-int	invalid_entry(t_big *big)
+/* checks for invalid entries - intmax or zeros... */
+void	invalid_entry_check(t_big *big)
 {
-	int	invalid;
+	int	i;
 
-	invalid = 0;
-	if (big->nr < 1)
-		invalid++;
-	if (big->ttd < 0)
-		invalid++;
-	if (big->tte < 0)
-		invalid++;
-	if (big->tts < 0)
-		invalid++;
-	if (big->cycle < 0)
-		invalid++;
-	if (invalid)
+	i = 0;
+	if (big->philo_nr < 1 || big->philo_nr > 200)
+		i++;
+	if (big->ttd < 1)
+		i++;
+	if (big->tte < 1)
+		i++;
+	if (big->tts < 1)
+		i++;
+	if (i)
 	{
 		printf("Invalid entry\n");
 		free(big);
 		exit (1);
 	}
-	return (invalid);
 }
