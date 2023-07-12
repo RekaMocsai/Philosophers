@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/11 15:36:04 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/12 11:18:59 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,26 @@ int	input_checker(int argc, char **argv)
 	return (0);
 }
 
-// int	invalid_nums(t_main *main)
-// {
-// 	int	invalid;
+int	invalid_entry(t_big *big)
+{
+	int	invalid;
 
-// 	invalid = 0;
-// 	if (main->nr < 1)
-// 		invalid++;
-// 	if (main->ttd < 0)
-// 		invalid++;
-// 	if (main->tte < 0)
-// 		invalid++;
-// 	if (main->tts < 0)
-// 		invalid++;
-// 	if (main->cycle < 0)
-// 		invalid++;
-// 	if (invalid)
-// 		free(data);
-// 	return (invalid);
-// }
+	invalid = 0;
+	if (big->nr < 1)
+		invalid++;
+	if (big->ttd < 0)
+		invalid++;
+	if (big->tte < 0)
+		invalid++;
+	if (big->tts < 0)
+		invalid++;
+	if (big->cycle < 0)
+		invalid++;
+	if (invalid)
+	{
+		printf("Invalid entry\n");
+		free(big);
+		exit (1);
+	}
+	return (invalid);
+}

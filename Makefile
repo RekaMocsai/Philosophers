@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/11 15:34:54 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/12 10:43:42 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ COMPILE 	= $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
 # source files
 SRC 		=	main.c \
 				checker.c \
+				init.c \
 				utils.c
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 

@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/12 11:17:15 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/12 11:19:05 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int ft_atoi(const char *str)
+t_big *init_mainstruct(int ac, char **av)
 {
-	int				i;
-	unsigned long	nb;
-
-	i = 0;
-	nb = 0;
-	while (str && str[i] && i < 11)
+	t_big	*big;
+	
+	big = malloc(sizeof (t_big));
+	if (big == NULL)
 	{
-		nb = nb * 10 + str[i] - '0';
-		i++;
+		printf("Memory allocation failed\n");
+		return (NULL);
 	}
-	if (nb > INT_MAX)
-		return (-1);
-	return (nb);
+	big->nr = ft_atoi(av[1]);
+	big->ttd = ft_atoi(av[2]);
+	big->tte = ft_atoi(av[3]);
+	big->tts = ft_atoi(av[4]);
+	if (ac == 6)
+		big->cycle = ft_atoi(av[5]);
+	else
+		big->cycle = -1;
+	invalid_entry(big);
+	return (big);
 }
-
-// int	still_alive(t_big *big)
-// {
-// 	pthread_mutex_lock(&(big->alive_mutex));
-// 	if (!big->all_alive)
-// 	{
-// 		pthread_mutex_unlock(&(big->alive_mutex));
-// 		return (0);
-// 	}
-// 	pthread_mutex_unlock(&(big->alive_mutex));
-// 	return (1);
-// }
