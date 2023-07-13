@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/12 14:24:18 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/13 11:23:08 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	invalid_entry_check(t_big *big)
 	int	i;
 
 	i = 0;
-	if (big->philo_nr < 1 || big->philo_nr > 200)
+	if (big->headcount < 1 || big->headcount > 200)
 		i++;
 	if (big->ttd < 1)
 		i++;
