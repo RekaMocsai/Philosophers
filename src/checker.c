@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/13 11:23:08 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:28:30 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	input_checker(int argc, char **argv)
 }
 
 /* checks for invalid entries - intmax or zeros... */
-void	invalid_entry_check(t_big *big)
+int	invalid_entry_check(t_big *big)
 {
 	int	i;
 
@@ -85,7 +85,7 @@ void	invalid_entry_check(t_big *big)
 	if (i)
 	{
 		printf("Invalid entry\n");
-		free(big);
-		exit (1);
+		return (1);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/13 11:23:07 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/14 18:30:04 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <stdbool.h>
 
 # define INT_MAX	2147483647
 # define TAKEN_FORK	0
@@ -28,19 +29,17 @@
 
 typedef struct s_fork
 {
-	int	id;
-	pthread_mutex_t	fork_mutex; 
+	int	*fork;
+	pthread_mutex_t	*fork_mutex_arr; 
 }	t_fork;
 
 typedef struct s_philo
 {
 	int				id;
-	int				l_hand;
-	int				r_hand;
-	struct t_fork	*l_fork;
-	struct t_fork	*r_fork;
 	int				times_eaten;
-	int				last_eaten;
+	struct t_fork	*left_fork;
+	struct t_fork	*right_fork;
+	struct timeval	last_eaten;
 }	t_philo;
 
 typedef struct s_big
@@ -50,11 +49,15 @@ typedef struct s_big
 	int				tte;
 	int				tts;
 	int				cycle;
-	int				all_alive;
+	bool			all_alive;
+	bool			all_full;
+	int				*fork_arr;
 	struct t_philo	*philoslist;
-	struct t_fork	*forkslist;
+	struct t_fork	*forks;
+	pthread_mutex_t	*fork_mutex_arr;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	alive_mutex;
+	pthread_mutex_t	eating_mutex;
 	pthread_mutex_t	last_eaten_mutex;
 	pthread_mutex_t	philos_mutex;
 	struct timeval	start_time;
@@ -62,12 +65,13 @@ typedef struct s_big
 
 /* Input checking */
 int				input_checker(int argc, char **argv);
-void			invalid_entry_check(t_big *big);
+int				invalid_entry_check(t_big *big);
 
 /* Utils */
 int				ft_atoi(const char *str);
 
 /* Initialize */
-t_big			*init_mainstruct(int ac, char **av);
+int				init_mainstruct(int ac, char **av, t_big *big);
+int				create_threads(t_big *big);
 
 #endif
