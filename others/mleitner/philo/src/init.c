@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleitner <mleitner@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 16:39:36 by mleitner          #+#    #+#             */
-/*   Updated: 2023/05/12 12:39:31 by mleitner         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:31:05 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,7 @@ pthread_mutex_t	*init_forks(t_rules *rules)
 //prints error messages and frees memory on failure
 int	create_philos(t_rules *rules)
 {
-	rules->phil = malloc(sizeof(t_philo) * rules->phil_n);
-	if (!rules->phil)
-		return (0);
+
 	rules->forks = init_forks(rules);
 	if (!rules->forks)
 	{

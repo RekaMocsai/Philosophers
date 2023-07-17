@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/12 10:43:42 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/17 14:17:42 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,10 @@ COMPILE 	= $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
 SRC 		=	main.c \
 				checker.c \
 				init.c \
-				utils.c
+				utils.c \
+				free.c \
+				threads.c
+
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
 # objects
