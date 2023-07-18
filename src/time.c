@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/18 16:01:29 by rmocsai          ###   ########.fr       */
+/*   Created: 2023/07/18 14:15:28 by rmocsai           #+#    #+#             */
+/*   Updated: 2023/07/18 16:01:46 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	main(int argc, char **argv)
+int get_starttime(unsigned long *start_time)
 {
-	t_big	big;
-	
-	big.all_alive = true;
-	big.all_full = false;
-	if (input_checker(argc, argv) || init_bigstruct(argc, argv, &big) || \
-	get_starttime(&big.start_time))
-		return (1);
-	if (init_main(&big)) // || create_threads(&big))
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == 0)
 	{
-		printf("If no other message: memory allocation failed\n");
-		//free philos, forks?
-		return (1);
+		start_time = (unsigned long *)(time.tv_sec * 1000) + (time.tv_usec / 1000);
+		return (0);
 	}
-	// if ()
-	// 	return (1);
-	return (0);
+	else
+		return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/17 15:49:20 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/18 15:55:14 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,26 @@ static int	init_forks(t_big *big)
 int	init_philos(t_big *big)
 {
 	int	i;
+	int j;
 
 	i = -1;
 	while (++i < big->headcount)
 	{
+		j = i;
 		big->phil_arr[i].id = i;
 		big->phil_arr[i].times_eaten = 0;
 		big->phil_arr[i].big = big;
-		big->phil_arr[i].l_fork = big->fork_mutex_arr + (i % big->headcount);
-		big->phil_arr[i].r_fork = big->fork_mutex_arr + ((i + 1) % big->headcount);
-		big->phil_arr[i].l_fork_val = big->forks.fork +	(i % big->headcount);
-		big->phil_arr[i].r_fork_val = big->forks.fork +	((i + 1) % big->headcount);
+		big->phil_arr[i].l_fork = &(big->forks[j]);
+        big->phil_arr[i].r_fork = &(big->forks[(j + 1) % big->headcount]);
 	}
+	return (0);
 }
+		// fork mutex: big->fork_mutex_arr + (i % big->headcount);
+		// fork mutex: big->phil_arr[i].r_fork = big->fork_mutex_arr + ((i + 1) % big->headcount);
+		// int_value: big->phil_arr[i].l_fork = big->forks.fork + (i % big->headcount);
+		// int value: big->phil_arr[i].r_fork = big->forks.fork + ((i + 1) % big->headcount);
+
+
 
 int	init_main(t_big *big)
 {

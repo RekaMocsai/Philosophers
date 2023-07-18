@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/17 15:45:08 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/18 16:05:25 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@
 # define DIED		4
 
 //forks arr
+typedef struct s_big	t_big;
+typedef struct s_philo	t_philo;
+
 typedef struct s_fork
 {
-	int	*fork;
+	int				*fork;
 	pthread_mutex_t	fork_mutex; 
 }	t_fork;
 
@@ -39,10 +42,10 @@ typedef struct s_philo
 {
 	int				id;
 	int				times_eaten;
-	struct t_fork	*l_fork;
-	struct t_fork	*r_fork;
-	struct timeval	last_eaten;
-	struct t_big	*big;
+	t_fork			*l_fork;
+	t_fork			*r_fork;
+	unsigned long	last_eaten;
+	t_big			*big;
 }	t_philo;
 
 //main struct
@@ -57,12 +60,12 @@ typedef struct s_big
 	bool			all_full;
 	pthread_mutex_t	*fork_mutex_arr;
 	int				*fork_arr;
-	struct t_philo	*phil_arr;
-	struct t_fork	*forks;
+	t_philo			*phil_arr;
+	t_fork			*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	all_stop_mutex;
 	pthread_mutex_t	eating_mutex;
-	struct timeval	start_time;
+	unsigned long	start_time;
 }	t_big;
 
 /* Input checking */
@@ -71,6 +74,7 @@ int				invalid_entry_check(t_big *big);
 
 /* Utils */
 int				ft_atoi(const char *str);
+int				get_starttime(unsigned long *star_time);
 
 /* Initialize */
 int				init_bigstruct(int ac, char **av, t_big *big);
