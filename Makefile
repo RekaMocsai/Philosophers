@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/18 14:15:14 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/20 17:23:03 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,8 +45,8 @@ SRC 		=	main.c \
 				utils.c \
 				free.c \
 				time.c \
-				threads.c
-				
+				threads.c \
+				routine.c				
 
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 

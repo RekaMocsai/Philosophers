@@ -6,11 +6,20 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:03:16 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/17 14:36:37 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/19 11:55:18 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+void	safe_free(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+	}
+	ptr = NULL;
+}
 
 int	free_fork_mutexes(t_big *big)
 {

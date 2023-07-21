@@ -6,16 +6,16 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/17 14:36:25 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/20 12:48:07 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int ft_atoi(const char *str)
+unsigned long ft_atoi(const char *str)
 {
 	int				i;
-	unsigned long	nb;
+	unsigned long			nb;
 
 	i = 0;
 	nb = 0;
@@ -25,68 +25,37 @@ int ft_atoi(const char *str)
 		i++;
 	}
 	if (nb > INT_MAX)
-		return (-1);
+		return (0);
 	return (nb);
 }
 
-void	safe_free(void *ptr)
+void	stop_all(t_big *big)
 {
-	if (ptr)
-	{
-		free(ptr);
-	}
-	ptr = NULL;
+	pthread_mutex_lock(&(big->alive_mutex));
+	big->all_alive = 0;
+	pthread_mutex_unlock(&(big->alive_mutex));
 }
 
-// void	print_msgs(t_big *big, int i)
-// {
-// 	pthread_mutex_lock(&big->print_mutex);
-// 	if (philos_all_eaten(big) == 0 && philos_all_alive(big) == 1)
-// 	{
-// 		if (i == TAKEN_FORK)
-/* 			printf("%ld %d has taken a fork\n", calc_timestamp(big), \
-*/
-// 			philos->id + 1);
-// 		if (i == EATING)
-// 			printf("%ld %d is eating\n", calc_timestamp(big), philos->id + 1);
-// 		if (i == SLEEPING)
-// 			printf("%ld %d is sleeping\n", calc_timestamp(big), philos->id + 1);
-// 		if (i == THINKING)
-// 			printf("%ld %d is thinking\n", calc_timestamp(big), philos->id + 1);
-// 		if (i == DIED)
-// 			printf("%ld %d died\n", calc_timestamp(big), philos->id + 1);
-// 	}
-// 	pthread_mutex_unlock(&big->print_mutex);
-// }
 
-// philos_all_eaten(t_big *big)
-// {}
-
-// philos_all_alive(t_big *big)
-// {
+void	print_msgs(t_philo *philo, int i)
+{
+	t_big	*big;
 	
-// }
+	big = philo->big;
+	pthread_mutex_lock(&big->print_mutex);
+	if (!philos_all_eaten(big) && philos_all_alive(big))
+	{
+		if (i == TAKEN_FORK)
+ 			printf("%ld %d has taken a fork\n", get_starttime() - big->start_time, philo->id + 1);
+		if (i == EATING)
+			printf("%ld %d is eating\n", get_starttime() - big->start_time, philo->id + 1);
+		if (i == SLEEPING)
+			printf("%ld %d is sleeping\n", get_starttime() - big->start_time, philo->id + 1);
+		if (i == THINKING)
+			printf("%ld %d is thinking\n", get_starttime() - big->start_time, philo->id + 1);
+		if (i == DIED)
+			printf("%ld %d died\n", get_starttime() - big->start_time, philo->id + 1);
+	}
+	pthread_mutex_unlock(&big->print_mutex);
+}
 
-// long calc_timestamp(t_big *big)
-// {
-// 	unsigned long	timestamp;
-// 	struct timeval		current;
-
-// 	timestamp = 0;
-// 	gettimeofday(&current, NULL);
-// 	timestamp = big->start_time.tv_sec * 1000000 + big->start_time.tv_usec;
-// 	timestamp = (current.tv_sec * 1000000 + current.tv_usec) - timestamp;
-// 	return (timestamp / 1000);
-// }
-
-// int	still_alive(t_big *big)
-// {
-// 	pthread_mutex_lock(&(big->alive_mutex));
-// 	if (!big->all_alive)
-// 	{
-// 		pthread_mutex_unlock(&(big->alive_mutex));
-// 		return (0);
-// 	}
-// 	pthread_mutex_unlock(&(big->alive_mutex));
-// 	return (1);
-// }

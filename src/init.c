@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/18 15:55:14 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:01:54 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ int	init_bigstruct(int ac, char **av, t_big *big)
 	big->ttd = ft_atoi(av[2]);
 	big->tte = ft_atoi(av[3]);
 	big->tts = ft_atoi(av[4]);
+	if (!big->headcount || !big->ttd || !big->tte || !big->tts)
+	{
+		printf("Invalid entry!\n");
+		return (1);
+	}
 	if (ac == 6)
 	{
 		if (av[5] && av[5][0] == '0')
@@ -74,7 +79,7 @@ static int	mutex_init_helper(t_big *big)
 
 static int	init_mutexes(t_big *big)
 {
-	int				i;
+	int	i;
 	
 	big->fork_mutex_arr = malloc (sizeof(pthread_mutex_t) * big->headcount);
 	if (!big->fork_mutex_arr)
@@ -99,17 +104,26 @@ static int	init_mutexes(t_big *big)
 static int	init_forks(t_big *big)
 {
 	int				i;
-	t_fork			*forks;
 
-	forks = malloc (sizeof (t_fork) * big->headcount);
-	if (!forks)
-		return (1);
 	big->fork_arr = malloc (sizeof (int) * big->headcount);
 	if (!big->fork_arr)
 		return (1);
 	i = -1;
 	while (++i < big->headcount)
-		big->fork_arr[i] = i;
+		big->fork_arr[i] = 0;
+	return (0);
+}
+
+static int	init_forkstruct(t_big *big)
+{
+	int	i;
+	
+	i = -1;
+	while (++i < big->headcount)
+	{
+		big->forks[i].in_use = &(big->fork_arr[i]);
+		big->forks[i].fork_mutex = &(big->fork_mutex_arr[i]);
+	}
 	return (0);
 }
 
@@ -130,19 +144,16 @@ int	init_philos(t_big *big)
 	}
 	return (0);
 }
-		// fork mutex: big->fork_mutex_arr + (i % big->headcount);
-		// fork mutex: big->phil_arr[i].r_fork = big->fork_mutex_arr + ((i + 1) % big->headcount);
-		// int_value: big->phil_arr[i].l_fork = big->forks.fork + (i % big->headcount);
-		// int value: big->phil_arr[i].r_fork = big->forks.fork + ((i + 1) % big->headcount);
-
-
 
 int	init_main(t_big *big)
 {
-	big->forks = malloc (sizeof (pthread_mutex_t) * big->headcount);
+	big->fork_mutex_arr = malloc (sizeof (pthread_mutex_t) * big->headcount);
+	if (!big->fork_mutex_arr)
+		return (1);
+	big->forks = malloc (sizeof (t_fork) * big->headcount);
 	if (!big->forks)
 		return (1);
-	if (init_forks(big) || init_mutexes(big))
+	if (init_forks(big) || init_mutexes(big) || init_forkstruct(big))
 		return (1);
 	big->phil_arr = malloc (sizeof (t_philo) * big->headcount);
 	if (!big->forks)
