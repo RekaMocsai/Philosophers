@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/21 11:00:22 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/21 11:14:31 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ typedef struct s_big
 	t_philo			*phil_arr;
 	t_fork			*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	eating_mutex;
+	pthread_mutex_t	alive_mutex;
+	pthread_mutex_t	cycle_mutex;
 	pthread_mutex_t	all_stop_mutex;
 }	t_big;
 

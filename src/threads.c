@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 11:15:23 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/20 17:28:42 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:21:30 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	philos_all_eaten(t_big *big)
 
 	i = -1;
 	count = 0;
-	pthread_mutex_lock(&(big->eating_mutex));
+	pthread_mutex_lock(&(big->cycle_mutex));
 	while (++i < big->headcount)
 	{
 		if (big->phil_arr[i].times_eaten >= big->cycle)
 			count++;
 	}
-	pthread_mutex_unlock(&(big->eating_mutex));
+	pthread_mutex_unlock(&(big->cycle_mutex));
 	if (count == big->headcount)
 		return (1);
 	return (0);
