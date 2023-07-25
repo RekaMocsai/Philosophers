@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 12:51:43 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:15:58 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_big
 	int				cycle;
 	unsigned long	start_time;
 	bool			all_alive;
-	bool			all_full;
 	int				*fork_arr;
 	pthread_mutex_t	*fork_mutex_arr;
 	t_philo			*phil_arr;
@@ -67,8 +66,6 @@ typedef struct s_big
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	cycle_mutex;
-	pthread_mutex_t	eating_mutex;
-	pthread_mutex_t	all_stop_mutex;
 }	t_big;
 
 /* Input checking */
@@ -78,7 +75,6 @@ int				invalid_entry_check(t_big *big);
 /* Utils */
 unsigned long	ft_atoi(const char *str);
 int				print_msgs(t_philo *philo, int i);
-void			stop_all(t_big *big);
 
 /* Initialize */
 int				init_bigstruct(int ac, char **av, t_big *big);

@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 14:19:06 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:15:32 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ unsigned long	ft_atoi(const char *str)
 	return (nb);
 }
 
-void	stop_all(t_big *big)
-{
-	pthread_mutex_lock(&(big->alive_mutex));
-	big->all_alive = 0;
-	pthread_mutex_unlock(&(big->alive_mutex));
-}
-
-
 int	print_msgs(t_philo *philo, int i)
 {
 	pthread_mutex_lock(&philo->big->print_mutex);
@@ -58,7 +50,7 @@ int	print_msgs(t_philo *philo, int i)
 			printf("%ld %d died\n", \
 			get_starttime() - philo->big->start_time, philo->id + 1);
 		pthread_mutex_unlock(&philo->big->print_mutex);
-		return (0);	
+		return (0);
 	}
 	pthread_mutex_unlock(&philo->big->print_mutex);
 	return (1);

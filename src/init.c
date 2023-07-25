@@ -6,24 +6,11 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/24 09:29:22 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:18:35 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-
-
-static void	init_alive_mutex(t_big *big, int *i)
-{
-	if (pthread_mutex_init(&big->alive_mutex, NULL) != 0)
-	{
-		*i += destroy_check(&big->cycle_mutex);
-		*i += destroy_check(&big->print_mutex);
-		*i += destroy_check(&big->eating_mutex);
-		*i += destroy_check(&big->all_stop_mutex);
-	}
-}
 
 static int	mutex_init_helper(t_big *big)
 {
@@ -32,20 +19,13 @@ static int	mutex_init_helper(t_big *big)
 	i = 0;
 	if (pthread_mutex_init(&big->print_mutex, NULL) != 0)
 		i++;
-	if (pthread_mutex_init(&big->eating_mutex, NULL) != 0)
-		i += destroy_check(&big->print_mutex);
-	if (pthread_mutex_init(&big->all_stop_mutex, NULL) != 0)
-	{
-		i += destroy_check(&big->print_mutex);
-		i += destroy_check(&big->eating_mutex);
-	}
 	if (pthread_mutex_init(&big->cycle_mutex, NULL) != 0)
+		i += destroy_check(&big->print_mutex);
+	if (pthread_mutex_init(&big->alive_mutex, NULL) != 0)
 	{
 		i += destroy_check(&big->print_mutex);
-		i += destroy_check(&big->eating_mutex);
-		i += destroy_check(&big->all_stop_mutex);
+		i += destroy_check(&big->cycle_mutex);
 	}
-	init_alive_mutex(big, &i);
 	if (i)
 		return (1);
 	return (0);

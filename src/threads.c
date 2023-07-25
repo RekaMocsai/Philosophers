@@ -6,13 +6,13 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 11:15:23 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 14:41:37 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:41:52 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-	//get_starttime here?
+//get_starttime here?
 int	create_threads(t_philo *phil_arr)
 {
 	int	i;
@@ -31,6 +31,7 @@ int	create_threads(t_philo *phil_arr)
 	return (0);
 }
 
+/* Monitors statuses while other threads are doing their thing */
 void	whatsup(t_philo *phil_arr, t_big *big)
 {
 	int	i;
@@ -55,7 +56,7 @@ void	whatsup(t_philo *phil_arr, t_big *big)
 	}
 }
 
-//spins down all threads, destroys mutexes and frees structs
+/* waits till all threads finished, destroys all mutexes */
 int	thread_joiner(t_philo *philo_arr)
 {
 	int		i;
@@ -71,11 +72,9 @@ int	thread_joiner(t_philo *philo_arr)
 	i = 0;
 	while (i < big->headcount)
 		pthread_mutex_destroy(&big->fork_mutex_arr[i++]);
-	pthread_mutex_destroy(&big->eating_mutex);
 	pthread_mutex_destroy(&big->print_mutex);
 	pthread_mutex_destroy(&big->alive_mutex);
 	pthread_mutex_destroy(&big->cycle_mutex);
-	pthread_mutex_destroy(&big->all_stop_mutex);
 	safe_free(philo_arr);
 	safe_free(big->fork_arr);
 	safe_free(big->forks);

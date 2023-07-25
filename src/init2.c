@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:44 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/24 09:29:31 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:16:51 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	init_philos(t_big *big)
 
 int	init_bigstruct(int ac, char **av, t_big *big)
 {
+	big->all_alive = true;
 	big->headcount = ft_atoi(av[1]);
 	big->ttd = ft_atoi(av[2]);
 	big->tte = ft_atoi(av[3]);
@@ -86,4 +87,3 @@ int	destroy_check(pthread_mutex_t *ptr)
 		pthread_mutex_destroy(ptr);
 	return (1);
 }
-

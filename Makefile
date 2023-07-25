@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/24 10:57:33 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/25 15:40:13 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ fclean: clean
 re: fclean all
 
 norm: 
-	norminette -R CheckForbiddenSourceHeader $(SRC_DIR) $(INC_DIR)
+	norminette $(SRC_DIR) $(INC_DIR)
 
 debug: CFLAGS += -fsanitize=address
 debug: fclean $(NAME)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/14 18:28:30 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 15:40:37 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-/* Returns 1 if current char is digit, 0 if anithing else */
+/* Returns 1 if current char is digit, 0 if anything else */
 static int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
@@ -24,7 +24,7 @@ static int	ft_isdigit(int c)
 /* Checks for empty strings & if args are digits only */
 static int	check_args(int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	while (argc-- > 1)
 	{
