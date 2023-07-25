@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 15:15:58 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:30:35 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void			custom_usleep(unsigned long time);
 
 /* Threading */
 int				create_threads(t_philo *phil_arr);
+void			*workwork(void *arg);
 int				philos_all_eaten(t_big *big);
 int				philos_all_alive(t_big *big);
-void			*workwork(void *arg);
 void			whatsup(t_philo *phil_arr, t_big *big);
 int				thread_joiner(t_philo *philo_arr);
 
@@ -103,4 +103,6 @@ void			be_eating(t_philo *philo);
 /* free */
 int				free_fork_mutexes(t_big *big);
 void			safe_free(void *ptr);
+void			free_all_safely(t_big *big);
+
 #endif

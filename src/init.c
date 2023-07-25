@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 15:18:35 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:20:46 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,6 @@ static int	init_forkstruct(t_big *big)
 
 int	init_main(t_big *big)
 {
-	big->fork_mutex_arr = malloc (sizeof (pthread_mutex_t) * big->headcount);
-	if (!big->fork_mutex_arr)
-		return (1);
 	big->forks = malloc (sizeof (t_fork) * big->headcount);
 	if (!big->forks)
 		return (1);

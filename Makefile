@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/25 15:40:13 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/25 16:27:24 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ OBJS		= $(addprefix $(OBJ_DIR), $(OBJ))
 # dependencies
 #DEPFILES :=$(SRC:%.c=$(DEP_DIR)/%.d)
 
-.PHONY: all re clean fclean norm
+.PHONY: all re clean fclean norm debug_threads debug_leaks
 .SILENT:
 
 $(OBJ_DIR)%.o:		$(SRC_DIR)%.c
@@ -92,10 +92,10 @@ re: fclean all
 norm: 
 	norminette $(SRC_DIR) $(INC_DIR)
 
-debug: CFLAGS += -fsanitize=address
+debug_leaks: CFLAGS += -fsanitize=address
 debug: fclean $(NAME)
 	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=address$(CLR_RM)"
 
-tebug: CFLAGS += -fsanitize=thread
+debug_threads: CFLAGS += -fsanitize=thread
 tebug: fclean $(NAME)
 	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=thread$(CLR_RM)"
