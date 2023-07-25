@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:15:28 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/20 12:07:42 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/24 10:37:21 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ unsigned long	get_starttime(void)
 	struct timeval	time_val;
 
 	if (gettimeofday(&time_val, NULL) == 0)
-	{
-		return (time_val.tv_sec * 1000) + (time_val.tv_usec / 1000);
-	}
+		return ((time_val.tv_sec * 1000) + (time_val.tv_usec / 1000));
 	else
 		return (0);
 }

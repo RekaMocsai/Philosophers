@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/20 17:23:03 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/24 10:57:33 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,13 @@ COMPILE 	= $(CC) $(DEPFLAGS) $(CPPFLAGS) $(CFLAGS)
 SRC 		=	main.c \
 				checker.c \
 				init.c \
+				init2.c \
 				utils.c \
 				free.c \
 				time.c \
 				threads.c \
-				routine.c				
+				routine.c \
+				status.c
 
 SRCS		= $(addprefix $(SRC_DIR), $(SRC))
 
@@ -57,7 +59,7 @@ OBJS		= $(addprefix $(OBJ_DIR), $(OBJ))
 # dependencies
 #DEPFILES :=$(SRC:%.c=$(DEP_DIR)/%.d)
 
-.PHONY: all re clean fclean 
+.PHONY: all re clean fclean norm
 .SILENT:
 
 $(OBJ_DIR)%.o:		$(SRC_DIR)%.c
@@ -86,6 +88,9 @@ fclean: clean
 	echo "$(RED)Deleting$(CLR_RM) binary: $(CYAN)$(NAME)$(CLR_RM) ✔️"
 
 re: fclean all
+
+norm: 
+	norminette -R CheckForbiddenSourceHeader $(SRC_DIR) $(INC_DIR)
 
 debug: CFLAGS += -fsanitize=address
 debug: fclean $(NAME)

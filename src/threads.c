@@ -3,122 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 11:15:23 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/22 13:00:22 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 14:41:37 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
+	//get_starttime here?
 int	create_threads(t_philo *phil_arr)
 {
-	//get_starttime here?
 	int	i;
 
+	phil_arr->big->start_time = get_starttime();
 	i = -1;
 	while (++i < phil_arr->big->headcount)
 	{
 		phil_arr[i].last_eaten = phil_arr->big->start_time;
-		if (pthread_create(&phil_arr[i].tid, NULL,	workwork, &phil_arr[i])) //workwork doesn't really happen!!!! tid-s not initialized!!!
+		if (pthread_create(&phil_arr[i].tid, NULL, workwork, &phil_arr[i]))
 			return (1);
 	}
 	whatsup(phil_arr, phil_arr->big);
-	pthread_mutex_unlock(&(phil_arr->big->print_mutex));
-	//thread_kill(phil_arr, phil_arr->big);
-	return (0);
-}
-
-/* PROBLEM HERE */
-void	*workwork(void *arg)
-{
-	t_philo		*philo;
-	t_big		*big;
-
-	printf("I'm here\n");
-	philo = (t_philo *) arg;
-	big = philo->big;
-	if ((philo->id + 1) % 2)
-		custom_usleep(big->tte);
-	while (1)
-	{
-		pthread_mutex_lock(&big->all_stop_mutex);
-		if (!philos_all_eaten(big) && philos_all_alive(big))
-		{
-			pthread_mutex_unlock(&big->all_stop_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&big->all_stop_mutex);
-		be_eating(philo);
-		print_msgs(philo, SLEEPING);
-		custom_usleep(big->tts);
-		print_msgs(philo, THINKING);
-	}
-	return (NULL);
-}
-static int	whatsup_helper(t_big *big)
-{
-	int	i;
-
-	i = big->all_alive;
-	pthread_mutex_unlock(&big->all_stop_mutex);
-	return (i);
-}
-void	whatsup(t_philo *phil_arr, t_big *big)
-{
-	int	i;
-
-	while (philos_all_eaten(big))
-	{
-		i = 0;
-		pthread_mutex_lock(&big->all_stop_mutex);
-		while (i < big->headcount && philos_all_alive(big))
-		{
-			pthread_mutex_unlock(&big->all_stop_mutex);
-			pthread_mutex_lock(&big->eating_mutex);
-			if ((get_starttime() - phil_arr[i].last_eaten) >= big->ttd)
-			{
-				print_msgs(phil_arr + i, DIED);
-				big->all_alive = false;
-			}
-			pthread_mutex_unlock(&big->eating_mutex);
-			i++;
-			pthread_mutex_lock(&big->all_stop_mutex);
-		}
-		if (whatsup_helper(big))
-			break ;
-		philos_all_eaten(big);
-	}
-}
-
-int	philos_all_eaten(t_big *big)
-{
-	int	i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	pthread_mutex_lock(&(big->cycle_mutex));
-	while (++i < big->headcount)
-	{
-		if (big->phil_arr[i].times_eaten >= big->cycle)
-			count++;
-	}
-	pthread_mutex_unlock(&(big->cycle_mutex));
-	if (count == big->headcount)
+	if (thread_joiner(phil_arr))
 		return (1);
 	return (0);
 }
 
-int	philos_all_alive(t_big *big)
+void	whatsup(t_philo *phil_arr, t_big *big)
 {
-	pthread_mutex_lock(&(big->alive_mutex));
-	if (!big->all_alive)
+	int	i;
+
+	while (1)
 	{
-		pthread_mutex_unlock(&(big->alive_mutex));
-		return (0);
+		i = -1;
+		while (++i < big->headcount && philos_all_alive(big))
+		{
+			pthread_mutex_lock(&big->alive_mutex);
+			if ((get_starttime() - phil_arr[i].last_eaten) >= big->ttd)
+			{
+				pthread_mutex_unlock(&big->alive_mutex);
+				print_msgs(&phil_arr[i], DIED);
+				big->all_alive = false;
+				pthread_mutex_lock(&big->alive_mutex);
+			}
+			pthread_mutex_unlock(&big->alive_mutex);
+		}
+		if (!philos_all_alive(big) || philos_all_eaten(big))
+			break ;
 	}
-	pthread_mutex_unlock(&(big->alive_mutex));
-	return (1);	
+}
+
+//spins down all threads, destroys mutexes and frees structs
+int	thread_joiner(t_philo *philo_arr)
+{
+	int		i;
+	t_big	*big;
+
+	big = philo_arr->big;
+	i = -1;
+	while (++i < big->headcount)
+	{
+		if (pthread_join(philo_arr[i].tid, NULL) != 0)
+			return (1);
+	}
+	i = 0;
+	while (i < big->headcount)
+		pthread_mutex_destroy(&big->fork_mutex_arr[i++]);
+	pthread_mutex_destroy(&big->eating_mutex);
+	pthread_mutex_destroy(&big->print_mutex);
+	pthread_mutex_destroy(&big->alive_mutex);
+	pthread_mutex_destroy(&big->cycle_mutex);
+	pthread_mutex_destroy(&big->all_stop_mutex);
+	safe_free(philo_arr);
+	safe_free(big->fork_arr);
+	safe_free(big->forks);
+	return (0);
 }

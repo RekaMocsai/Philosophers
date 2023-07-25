@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/20 12:48:07 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 14:19:06 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-unsigned long ft_atoi(const char *str)
+unsigned long	ft_atoi(const char *str)
 {
 	int				i;
-	unsigned long			nb;
+	unsigned long	nb;
 
 	i = 0;
 	nb = 0;
@@ -37,25 +37,29 @@ void	stop_all(t_big *big)
 }
 
 
-void	print_msgs(t_philo *philo, int i)
+int	print_msgs(t_philo *philo, int i)
 {
-	t_big	*big;
-	
-	big = philo->big;
-	pthread_mutex_lock(&big->print_mutex);
-	if (!philos_all_eaten(big) && philos_all_alive(big))
+	pthread_mutex_lock(&philo->big->print_mutex);
+	if (philos_all_alive(philo->big) && !philos_all_eaten(philo->big))
 	{
 		if (i == TAKEN_FORK)
- 			printf("%ld %d has taken a fork\n", get_starttime() - big->start_time, philo->id + 1);
-		if (i == EATING)
-			printf("%ld %d is eating\n", get_starttime() - big->start_time, philo->id + 1);
-		if (i == SLEEPING)
-			printf("%ld %d is sleeping\n", get_starttime() - big->start_time, philo->id + 1);
-		if (i == THINKING)
-			printf("%ld %d is thinking\n", get_starttime() - big->start_time, philo->id + 1);
-		if (i == DIED)
-			printf("%ld %d died\n", get_starttime() - big->start_time, philo->id + 1);
+			printf("%ld %d has taken a fork\n", \
+			get_starttime() - philo->big->start_time, philo->id + 1);
+		else if (i == EATING)
+			printf("%ld %d is eating\n", \
+			get_starttime() - philo->big->start_time, philo->id + 1);
+		else if (i == SLEEPING)
+			printf("%ld %d is sleeping\n", \
+			get_starttime() - philo->big->start_time, philo->id + 1);
+		else if (i == THINKING)
+			printf("%ld %d is thinking\n", \
+			get_starttime() - philo->big->start_time, philo->id + 1);
+		else if (i == DIED)
+			printf("%ld %d died\n", \
+			get_starttime() - philo->big->start_time, philo->id + 1);
+		pthread_mutex_unlock(&philo->big->print_mutex);
+		return (0);	
 	}
-	pthread_mutex_unlock(&big->print_mutex);
+	pthread_mutex_unlock(&philo->big->print_mutex);
+	return (1);
 }
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmocsai <rmocsai@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/21 11:14:31 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 12:51:43 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ typedef struct s_big
 	t_philo			*phil_arr;
 	t_fork			*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	eating_mutex;
 	pthread_mutex_t	alive_mutex;
 	pthread_mutex_t	cycle_mutex;
+	pthread_mutex_t	eating_mutex;
 	pthread_mutex_t	all_stop_mutex;
 }	t_big;
 
@@ -77,14 +77,17 @@ int				invalid_entry_check(t_big *big);
 
 /* Utils */
 unsigned long	ft_atoi(const char *str);
-void			print_msgs(t_philo *philo, int i);
+int				print_msgs(t_philo *philo, int i);
 void			stop_all(t_big *big);
 
 /* Initialize */
 int				init_bigstruct(int ac, char **av, t_big *big);
 int				create_threads(t_philo *phil_arr);
 int				init_main(t_big *big);
+int				init_forks(t_big *big);
 int				init_philos(t_big *big);
+int				destroy_check(pthread_mutex_t *ptr);
+int				destroy_return_one(pthread_mutex_t **forks);
 
 /* Time */
 unsigned long	get_starttime(void);
@@ -96,9 +99,10 @@ int				philos_all_eaten(t_big *big);
 int				philos_all_alive(t_big *big);
 void			*workwork(void *arg);
 void			whatsup(t_philo *phil_arr, t_big *big);
+int				thread_joiner(t_philo *philo_arr);
 
 /* Routine */
-void	be_eating(t_philo *philo);
+void			be_eating(t_philo *philo);
 
 /* free */
 int				free_fork_mutexes(t_big *big);
