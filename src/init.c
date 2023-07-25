@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 16:20:46 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:18:50 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static int	init_mutexes(t_big *big)
 	i = -1;
 	while (++i < big->headcount)
 	{
-		if (pthread_mutex_init(big->fork_mutex_arr + i, NULL) != 0)
+		if (pthread_mutex_init(&big->fork_mutex_arr[i], NULL) != 0)
 		{
 			printf("Mutex init failed!\n");
-			return (destroy_return_one(&big->fork_mutex_arr));
+			return (destroy_return_one(big->fork_mutex_arr, i));
 		}
 	}
 	if (mutex_init_helper(big))

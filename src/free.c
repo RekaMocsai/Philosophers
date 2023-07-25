@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 14:03:16 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 16:26:21 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:45:04 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ void	free_all_safely(t_big *big)
 	{
 		if (big->fork_arr) 
 			safe_free(&big->fork_arr);
-		safe_free(big);
 	}
 }

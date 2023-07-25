@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 16:30:35 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:15:19 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int				init_main(t_big *big);
 int				init_forks(t_big *big);
 int				init_philos(t_big *big);
 int				destroy_check(pthread_mutex_t *ptr);
-int				destroy_return_one(pthread_mutex_t **forks);
+int				destroy_return_one(pthread_mutex_t *forks, int i);
 
 /* Time */
 unsigned long	get_starttime(void);

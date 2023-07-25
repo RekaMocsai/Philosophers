@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:44 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 15:16:51 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:15:12 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int	init_bigstruct(int ac, char **av, t_big *big)
 	return (0);
 }
 
-int	destroy_return_one(pthread_mutex_t **forks)
+int	destroy_return_one(pthread_mutex_t *forks, int i)
 {
-	int	i;
+	int	y;
 
-	i = -1;
-	while (forks[++i])
+	y = -1;
+	while (++y < i)
 	{
-		pthread_mutex_destroy(forks[i]);
+		pthread_mutex_destroy(&forks[y]);
 	}
 	return (1);
 }

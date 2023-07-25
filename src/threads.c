@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 11:15:23 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 16:05:29 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:43:45 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	create_threads(t_philo *phil_arr)
 	{
 		phil_arr[i].last_eaten = phil_arr->big->start_time;
 		if (pthread_create(&phil_arr[i].tid, NULL, workwork, &phil_arr[i]))
+		{
+			//join_successful creates?
 			return (1);
+		}
 	}
 	whatsup(phil_arr, phil_arr->big);
 	if (thread_joiner(phil_arr))
@@ -75,8 +78,6 @@ int	thread_joiner(t_philo *philo_arr)
 	pthread_mutex_destroy(&big->print_mutex);
 	pthread_mutex_destroy(&big->alive_mutex);
 	pthread_mutex_destroy(&big->cycle_mutex);
-	safe_free(philo_arr);
-	safe_free(big->fork_arr);
-	safe_free(big->forks);
+	free_all_safely(big);
 	return (0);
 }
