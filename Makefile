@@ -6,7 +6,7 @@
 #    By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/29 09:10:51 by rmocsai           #+#    #+#              #
-#    Updated: 2023/07/25 16:27:24 by rmocsai          ###   ########.fr        #
+#    Updated: 2023/07/26 14:38:18 by rmocsai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,9 +93,9 @@ norm:
 	norminette $(SRC_DIR) $(INC_DIR)
 
 debug_leaks: CFLAGS += -fsanitize=address
-debug: fclean $(NAME)
+debug_leaks: fclean $(NAME)
 	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=address$(CLR_RM)"
 
 debug_threads: CFLAGS += -fsanitize=thread
-tebug: fclean $(NAME)
+debug_threads: fclean $(NAME)
 	echo "DEBUG: Compiled with $(MAGENTA)$(BOLD)fsanitize=thread$(CLR_RM)"

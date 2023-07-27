@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 15:40:37 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/26 14:49:20 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ static int	check_args(int argc, char **argv)
 		i = 0;
 		if (argv[argc][i] == '\0')
 		{
-			printf("Empty string is not accepted!\n");
+			print_errors("Empty string is not accepted!\n", 2);
 			return (1);
 		}
 		while (argv[argc][i])
 		{
 			if (!ft_isdigit(argv[argc][i]))
 			{
-				printf("Arguments have to be digits only!\n");
+				print_errors("Arguments have to be digits only!\n", 2);
 				return (1);
 			}
 			i++;
@@ -52,15 +52,14 @@ int	input_checker(int argc, char **argv)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf(
-			"Wondering how to use?\nType: ./philo number_of_philosophers " \
-			"time_to_die " \
-			"time_to_eat " \
-			"time_to_sleep " \
+		print_errors(
+			"🧠🧠🧠 Wondering how to use? 🧠🧠🧠\n" \
+			"Type this: ./philo number_of_philosophers " \
+			"time_to_die time_to_eat time_to_sleep " \
 			"[Optional: number_of_times_each_philosopher_must_eat]\n"
-			"Times are in ms. Only positive numbers alloved! " \
+			"Times are in ms and must be digits only! " \
 			"- args might be subjected to limitations, " \
-			"but feel free to play around!\n");
+			"but feel free to play around!\n", 2);
 		return (1);
 	}
 	if (check_args(argc, argv))
@@ -84,7 +83,7 @@ int	invalid_entry_check(t_big *big)
 		i++;
 	if (i)
 	{
-		printf("Invalid entry\n");
+		print_errors("Invalid entry\n", 2);
 		return (1);
 	}
 	return (0);

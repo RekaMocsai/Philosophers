@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 15:06:05 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 17:15:19 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/27 10:20:36 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_philo
 	t_fork			*l_fork;
 	t_fork			*r_fork;
 	unsigned long	last_eaten;
+	unsigned long	start_time;
 	t_big			*big;
 	pthread_t		tid;
 }	t_philo;
@@ -57,7 +58,6 @@ typedef struct s_big
 	unsigned long	tte;
 	unsigned long	tts;
 	int				cycle;
-	unsigned long	start_time;
 	bool			all_alive;
 	int				*fork_arr;
 	pthread_mutex_t	*fork_mutex_arr;
@@ -74,35 +74,39 @@ int				invalid_entry_check(t_big *big);
 
 /* Utils */
 unsigned long	ft_atoi(const char *str);
-int				print_msgs(t_philo *philo, int i);
+void			print_errors(char *str, int fd);
+int				destroy_check(pthread_mutex_t *ptr);
+int				destroy_return_one(pthread_mutex_t *forks, int i);
+int				join_successful_threads(int i, t_philo *phil_arr);
 
 /* Initialize */
 int				init_bigstruct(int ac, char **av, t_big *big);
-int				create_threads(t_philo *phil_arr);
 int				init_main(t_big *big);
 int				init_forks(t_big *big);
 int				init_philos(t_big *big);
-int				destroy_check(pthread_mutex_t *ptr);
-int				destroy_return_one(pthread_mutex_t *forks, int i);
 
 /* Time */
 unsigned long	get_starttime(void);
-void			custom_usleep(unsigned long time);
+int				custom_usleep(unsigned long time, t_philo *philo);
 
 /* Threading */
 int				create_threads(t_philo *phil_arr);
-void			*workwork(void *arg);
-int				philos_all_eaten(t_big *big);
-int				philos_all_alive(t_big *big);
 void			whatsup(t_philo *phil_arr, t_big *big);
 int				thread_joiner(t_philo *philo_arr);
+int				print_msgs(t_philo *philo, int i);
 
 /* Routine */
-void			be_eating(t_philo *philo);
+void			*workwork(void *arg);
+int				be_eating(t_philo *philo);
 
-/* free */
-int				free_fork_mutexes(t_big *big);
+/* Status check */
+int				philos_all_alive(t_big *big);
+int				philos_all_eaten(t_big *big);
+
+/* Sanitation */
 void			safe_free(void *ptr);
-void			free_all_safely(t_big *big);
+int				free_fork_mutexes(t_big *big);
+void			mutex_cleaner(t_big *big);
+void			clean_all(t_big *big);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:44 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/25 17:15:12 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/27 10:22:36 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_forks(t_big *big)
 
 	big->fork_arr = malloc (sizeof (int) * big->headcount);
 	if (!big->fork_arr)
-		return (1);
+		return (write(2, "Fork_arr malloc error!\n", 23), 1);
 	i = -1;
 	while (++i < big->headcount)
 		big->fork_arr[i] = 0;
@@ -33,8 +33,9 @@ int	init_philos(t_big *big)
 	while (++i < big->headcount)
 	{
 		big->phil_arr[i].id = i;
-		big->phil_arr[i].times_eaten = 0;
 		big->phil_arr[i].big = big;
+		big->phil_arr[i].start_time = 0;
+		big->phil_arr[i].times_eaten = 0;
 		big->phil_arr[i].l_fork = &(big->forks[i]);
 		big->phil_arr[i].r_fork = &(big->forks[(i + 1) % big->headcount]);
 	}
@@ -50,14 +51,14 @@ int	init_bigstruct(int ac, char **av, t_big *big)
 	big->tts = ft_atoi(av[4]);
 	if (!big->headcount || !big->ttd || !big->tte || !big->tts)
 	{
-		printf("Invalid entry!\n");
+		print_errors("Invalid entry!\n", 2);
 		return (1);
 	}
 	if (ac == 6)
 	{
-		if (av[5] && av[5][0] == '0')
+		if ((av[5] && av[5][0] == '0') || !ft_atoi(av[5]))
 		{
-			printf("Invalid entry\n");
+			print_errors("Invalid entry\n", 2);
 			return (1);
 		}
 		big->cycle = ft_atoi(av[5]);
@@ -67,23 +68,4 @@ int	init_bigstruct(int ac, char **av, t_big *big)
 	if (invalid_entry_check(big))
 		return (1);
 	return (0);
-}
-
-int	destroy_return_one(pthread_mutex_t *forks, int i)
-{
-	int	y;
-
-	y = -1;
-	while (++y < i)
-	{
-		pthread_mutex_destroy(&forks[y]);
-	}
-	return (1);
-}
-
-int	destroy_check(pthread_mutex_t *ptr)
-{
-	if (ptr != NULL)
-		pthread_mutex_destroy(ptr);
-	return (1);
 }

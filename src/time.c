@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 14:15:28 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/24 10:37:21 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/27 10:21:59 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,17 @@ unsigned long	get_starttime(void)
 		return (0);
 }
 
-void	custom_usleep(unsigned long time)
+/* makes sure it doesn't eat || sleep if someone is already dead! */
+int	custom_usleep(unsigned long time, t_philo *philo)
 {
 	unsigned long	start;
 
 	start = get_starttime();
-	usleep(time * 990);
-	while (get_starttime() - start < time)
-		usleep(time);
+	while ((get_starttime() - start) < time)
+	{
+		if (!philos_all_alive(philo->big))
+			return (1);
+		usleep(100);
+	}
+	return (0);
 }
