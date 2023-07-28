@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:25:44 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/27 10:22:36 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/28 18:18:25 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	init_forks(t_big *big)
 
 	big->fork_arr = malloc (sizeof (int) * big->headcount);
 	if (!big->fork_arr)
-		return (write(2, "Fork_arr malloc error!\n", 23), 1);
+	{
+		print_errors("Fork_arr malloc error!\n", 2);
+		return (1);
+	}
 	i = -1;
 	while (++i < big->headcount)
 		big->fork_arr[i] = 0;

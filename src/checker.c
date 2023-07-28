@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:44:26 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/26 14:49:20 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/28 18:12:37 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ int	invalid_entry_check(t_big *big)
 	i = 0;
 	if (big->headcount < 1 || big->headcount > 200)
 		i++;
-	if (big->ttd < 1)
+	if (big->ttd < 60)
 		i++;
-	if (big->tte < 1)
+	if (big->tte < 60)
 		i++;
-	if (big->tts < 1)
+	if (big->tts < 60)
 		i++;
 	if (i)
 	{

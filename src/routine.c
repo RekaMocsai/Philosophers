@@ -6,7 +6,7 @@
 /*   By: rmocsai <rmocsai@student.42.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:54:41 by rmocsai           #+#    #+#             */
-/*   Updated: 2023/07/27 10:22:46 by rmocsai          ###   ########.fr       */
+/*   Updated: 2023/07/28 18:13:06 by rmocsai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	*workwork(void *arg)
 		if (print_msgs(philo, SLEEPING))
 			break ;
 		if (custom_usleep(philo->big->tts, philo))
-			return (NULL);
+			break ;
 		usleep(75);
 		if (print_msgs(philo, THINKING))
 			break ;
