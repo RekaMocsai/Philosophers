@@ -5,7 +5,7 @@ THE DINING PHILOSOPHERS PROBLEM
 
 In computer science, the dining philosophers problem is an example often used in concurrent algorithm design to illustrate synchronization issues and techniques for resolving them.
 
-42's Philosophers project is teaching you to work with multipiple threads that share and work on the same memory. If a variable is accessed by more than one thread, it will need a mutex to protect it. Mutex stand for mutual exclusion in order to avoid a deadlock and data races.
+42's Philosophers project is teaching you to work with multipiple threads that share and work on the same memory. If a variable is accessed by more than one thread, it will need a mutex to protect it. Mutex stand for mutual exclusion in order to avoid data races. Avoiding deadlocks is a key element in making sure all philosophers can eat, and optimizing the program to run smooth and fast is the point of this exercise.
 
 
 Mandatory part:
@@ -27,14 +27,3 @@ Implement dining philosophers problem with threads and mutexes.
 Allowed functions: memset, printf, malloc, free, write, usleep, gettimeofday, pthread_create, pthread_detach, pthread_join, pthread_mutex_init, pthread_mutex_destroy, thread_mutex_lock, pthread_mutex_unlock
 
 Not allowed: libft
-
-
-Other repos:
-
-https://github.com/Jamshidbek2000/philosophers_42
-
-https://github.com/derfleck/Philosophers
-
-https://github.com/TommyJD93/Philosophers
-
-
